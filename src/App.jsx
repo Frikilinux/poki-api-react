@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import './App.css'
 import { PokeCards } from './Card'
 import { PokeBalls } from './Pokeballs'
 import LogoUrl from './assets/pokemon_logo.svg'
+import './App.css'
 
 const appState = {
   currentURL: 'https://pokeapi.co/api/v2/pokemon/?limit=4&offset=0',
