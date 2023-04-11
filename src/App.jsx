@@ -51,8 +51,10 @@ export function App () {
   const [url, setUrl] = useState(appState.currentURL)
   const [pokemonArr, setPokemonArr] = useState([])
   const [pokeArr, setPokeArr] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    setIsLoading(true)
     fetch(url)
       .then(res => res.json())
       .then(data => {
@@ -70,6 +72,7 @@ export function App () {
         })
       )
       setPokeArr(data)
+      setIsLoading(false)
     }
     getData()
   }, [pokemonArr])
