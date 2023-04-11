@@ -1,8 +1,9 @@
+import { useState, useEffect } from 'react'
 import './App.css'
 import { PokeCards } from './Card'
 
 const appState = {
-  currentURL: 'https://pokeapi.co/api/v2/pokemon/?limit=9&offset=0',
+  currentURL: 'https://pokeapi.co/api/v2/pokemon/?limit=12&offset=0',
   isFetching: false
 }
 
@@ -18,7 +19,7 @@ const fetchPokemons = async (url) => {
 
 export const getPokemonsData = async () => {
   const { next, results } = await fetchPokemons(appState.currentURL)
-  appState.currentURL = next
+  // appState.currentURL = next
 
   const pokemonDataUrls = results.map((pokemon) => {
     return pokemon.url
@@ -34,12 +35,12 @@ export const getPokemonsData = async () => {
   return pokemonsData
 }
 
-export const pokemonesData = await getPokemonsData()
+const pokemonesData = await getPokemonsData()
 
 const Header = () => {
   return (
     <img
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1200px-International_Pok%C3%A9mon_logo.svg.png"
+      src="./src/assets/pokemon_logo.svg"
       alt=""
       className="pokemon-logo"
     />
@@ -47,12 +48,42 @@ const Header = () => {
 }
 
 export function App () {
+  const [url, setUrl] = useState(appState.currentURL)
+  const [pokemonArr, setPokemonArr] = useState([])
+  const [pokeArr, setPokeArr] = useState([])
+
+  useEffect(() => {
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setPokemonArr(data.results)
+        appState.currentURL = data.next
+      })
+  }, [url])
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await Promise.all(
+        pokemonArr.map(async (pokemon) => {
+          return await fetch(pokemon.url)
+            .then(res => res.json())
+        })
+      )
+      setPokeArr(data)
+    }
+    getData()
+  }, [pokemonArr])
+
+  console.log('POKEMON ARRAY 1', pokemonArr)
+  console.log('RECARGARGANDO', appState.currentURL)
+  console.log('POKE ARRAY 2', pokeArr)
   return (
     <section>
       <Header/>
       <div className="poke__container" id="caja">
         <PokeCards pokeData={pokemonesData}/>
       </div>
+      <button onClick={() => setUrl(appState.currentURL)}>Recargar todo</button>
     </section>
   )
 }
