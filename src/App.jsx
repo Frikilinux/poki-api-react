@@ -9,36 +9,6 @@ const appState = {
   isFetching: false
 }
 
-// const fetchPokemons = async (url) => {
-//   const res = await fetch(url)
-//   const data = await res.json()
-//   return data
-// }
-
-// const setNextURl = (data) => {
-//   return data.next
-// }
-
-// export const getPokemonsData = async () => {
-//   const { next, results } = await fetchPokemons(appState.currentURL)
-//   // appState.currentURL = next
-
-//   const pokemonDataUrls = results.map((pokemon) => {
-//     return pokemon.url
-//   })
-
-//   const pokemonsData = await Promise.all(
-//     pokemonDataUrls.map(async (url) => {
-//       const nextPokemonsData = await fetch(url)
-//       return await nextPokemonsData.json()
-//     })
-//   )
-
-//   return pokemonsData
-// }
-
-// const pokemonesData = await getPokemonsData()
-
 const Header = () => {
   return (
     <img
@@ -90,7 +60,7 @@ export function App () {
       <div className="poke__container" id="caja">
         {isLoading ? <PokeBalls /> : <PokeCards pokeData={pokeArr}/>}
       </div>
-      <button className=' fire poke__type' onClick={() => setUrl(appState.currentURL)}>Próxima página</button>
+      <button className='fire poke__type' onClick={() => setUrl(appState.currentURL)}>Próxima página</button>
     </section>
   )
 }
