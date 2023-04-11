@@ -14,10 +14,11 @@ body {
 section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 2rem;
   gap: 50px;
+  min-height: 100vh;
 }
 
 .pokemon-logo {
@@ -169,7 +170,7 @@ section {
 .pokeballs-container {
   display: flex;
   gap: 20px;
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 .pokeball {
   height: 48px;
